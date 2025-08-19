@@ -93,6 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           backgroundColor: Colors.transparent,
           title: const BackButton00(),
           automaticallyImplyLeading: false,
+          centerTitle: false,
         ),
         resizeToAvoidBottomInset: false,
 

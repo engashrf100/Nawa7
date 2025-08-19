@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'
     show BlocProvider, BlocListener, MultiBlocListener, ReadContext;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -84,11 +85,17 @@ class _MainScreenState extends State<MainScreen> {
       ],
       child: Scaffold(
         backgroundColor: theme.colorScheme.homeBg,
+        extendBodyBehindAppBar: false,
         appBar: AppBar(
           toolbarHeight: 70.h,
           automaticallyImplyLeading: false,
           backgroundColor: theme.colorScheme.homeBg,
           elevation: 0,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+          ),
           title: HomeHeaderSection(
             currentScreen: _getCurrentScreen(_currentIndex),
             onTabNavigation: (int index) {
@@ -96,7 +103,10 @@ class _MainScreenState extends State<MainScreen> {
             },
           ),
         ),
-        body: IndexedStack(index: _currentIndex, children: _buildScreens()),
+        body: SafeArea(
+          top: false,
+          child: IndexedStack(index: _currentIndex, children: _buildScreens()),
+        ),
         bottomNavigationBar: CustomBottomNavBar(
           currentIndex: _currentIndex,
           onTap: (int index) {

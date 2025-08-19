@@ -26,7 +26,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
-    return SafeArea(
+    return Padding(
+      padding:  EdgeInsets.symmetric(vertical: 8.h),
       child: Container(
         height: 70.h,
         decoration: BoxDecoration(
@@ -40,7 +41,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h),
+          padding: EdgeInsets.only(top: 8.h),
           child: Stack(
             clipBehavior: Clip.none,
             children: [

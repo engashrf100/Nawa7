@@ -71,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.transparent,
           title: const BackButton00(),
           automaticallyImplyLeading: false,
+          centerTitle: false,
         ),
         resizeToAvoidBottomInset: false,
         //  floatingActionButton: buildThemeLangFab(context: context),
@@ -81,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Gap(60.h),
+                Gap(80.h),
                 _buildWelcomeText(theme),
                 Gap(30.h),
 

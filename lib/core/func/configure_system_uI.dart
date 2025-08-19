@@ -1,12 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void configureSystemUI() {
-  /* SystemChrome.setSystemUIOverlayStyle(
+  // Configure system UI overlay style for consistent appearance across platforms
+  SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: colors,
-        systemNavigationBarColor: AppColors.white,
-        systemNavigationBarDividerColor: AppColors.white),
-  );*/
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ),
+  );
+  
+  // Set preferred orientations
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
 }
+    
