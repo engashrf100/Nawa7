@@ -20,6 +20,10 @@ workflows:
         PACKAGE_NAME: "com.example.nawah"
         BUILD_APP_NAME: "nawa7"
         API_BASE_URL: "https://eslamatia.online"
+        KEYSTORE_PATH: "nawa7.keystore"
+        KEYSTORE_PASSWORD: "Ashrf@100"
+        KEY_ALIAS: "nawa7"
+        KEY_PASSWORD: "Ashrf@100"
     
     scripts:
       # Clean and setup
@@ -32,6 +36,24 @@ workflows:
           # Clean previous builds
           flutter clean
           flutter pub get
+      
+      # Setup keystore for signing
+      - name: Setup keystore
+        script: |
+          echo "=== SETTING UP KEYSTORE ==="
+          
+          # Create key.properties file
+          cat > android/key.properties << EOF
+          storePassword=$KEYSTORE_PASSWORD
+          keyPassword=$KEY_PASSWORD
+          keyAlias=$KEY_ALIAS
+          storeFile=$KEYSTORE_PATH
+          EOF
+          
+          # Copy keystore to android directory
+          cp $KEYSTORE_PATH android/
+          
+          echo "✅ Keystore setup completed"
       
       # Build APK files
       - name: Build APK files
@@ -133,6 +155,8 @@ workflows:
       - build/distribution/*.apk
       - build/app/outputs/flutter-apk/*.apk
       - build/distribution/RELEASE_NOTES.txt
+      # Keystore for backup (optional)
+      - nawa7.keystore
     
     # ===========================================
     # BUILD CONFIGURATION
