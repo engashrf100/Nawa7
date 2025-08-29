@@ -12,6 +12,7 @@ abstract class SettingsRepository {
   );
   Future<Either<Failure, Unit>> clearPreferences();
   Future<Either<Failure, SettingsModel>> fetchSettings();
+  Future<Either<Failure, SettingsModel>> fetchSettingsByKey(String key);
   Future<Either<Failure, OnboardingModel>> getAppIntro();
 
   Future<Either<Failure, CountriesModel>> fetchCountries();

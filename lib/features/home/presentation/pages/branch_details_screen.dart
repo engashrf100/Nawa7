@@ -14,12 +14,14 @@ import 'package:nawah/features/home/presentation/widgets/home_widgets/app_sectio
 import 'package:nawah/features/home/presentation/widgets/home_widgets/clients_rating_slider.dart';
 import 'package:nawah/features/home/presentation/widgets/home_widgets/home_banner_section.dart';
 import 'package:nawah/features/home/presentation/widgets/home_widgets/home_card_with_button.dart';
-import 'package:nawah/features/settings/presentation/widgets/theme_lang_switcher.dart';
 
 import '../widgets/branch_details_widgets/advanced_clickable_contact_cards.dart';
 import '../widgets/branch_details_widgets/center_image_slider.dart';
 import '../widgets/branch_details_widgets/center_info.dart';
 import '../widgets/branch_details_widgets/expandable_header_card.dart';
+import '../widgets/branch_details_widgets/branch_categories_widget.dart';
+import '../widgets/branch_details_widgets/modern_working_hours_widget.dart';
+import '../widgets/branch_details_widgets/branch_status_widget.dart';
 
 class BranchDetailsScreen extends StatelessWidget {
   final AppBranch appBranch;
@@ -47,8 +49,14 @@ class BranchDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  BranchStatusWidget(
+                    workTimes: branch?.workTimes,
+                    workDays: branch?.workDays,
+                  ),
                   Gap(10.h),
                   _buildMainCard(branch, theme),
+                  Gap(20),
+                                    _buildCategoriesSection(branch),
                   Gap(20),
                   _buildBranchServices(appBranch),
                   Gap(20),
@@ -81,12 +89,12 @@ class BranchDetailsScreen extends StatelessWidget {
               location: branch?.region?.name ?? "",
               branchId: branch?.id?.toString(),
             ),
-            Gap(10.h),
-            _buildAddressCard(branch, theme),
-            Gap(10.h),
-            _buildAppointmentsCard(branch, theme),
-            Gap(10.h),
-            AdvancedClickableContactCards(appBranch: appBranch),
+                              Gap(10.h),
+                  _buildAddressCard(branch, theme),
+                  Gap(10.h),
+                  _buildAppointmentsCard(branch, theme),
+                  Gap(10.h),
+                  AdvancedClickableContactCards(appBranch: appBranch),
             Gap(20),
           ],
         ),
@@ -109,14 +117,33 @@ class BranchDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildAppointmentsCard(Branch? branch, ThemeData theme) {
-    if (branch?.workDays == null) return const SizedBox.shrink();
+    if (branch?.workDays == null && branch?.workTimes == null) return const SizedBox.shrink();
 
     return ExpandableHeaderCard(
       title: 'appointments'.tr(),
-      description: _buildAvailableDaysDescription(branch!.workDays!),
+      description: ModernWorkingHoursWidget(
+        workTimes: branch?.workTimes,
+        workDays: branch?.workDays,
+        theme: theme,
+      ),
       isInitiallyExpanded: false,
       img: AppAssets.calendar,
     );
+  }
+
+  Widget _buildCategoriesSection(Branch? branch) {
+    if (branch?.categories == null || branch!.categories!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 16.w), child:   AppCard( child:  Column(
+      children: [
+        BranchCategoriesWidget(
+          categories: branch.categories,
+        ),
+        Gap(20.h),
+      ],
+    )));
   }
 
   AppBar _buildAppBar(ThemeData theme, BuildContext context, Branch? branch) {
@@ -150,12 +177,7 @@ class BranchDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            GradientIconButton(
-              assetPath: AppAssets.search,
-              useSvg: true,
-              isLeft: true,
-              onTap: () {},
-            ),
+          
           ],
         ),
       ),
@@ -197,52 +219,5 @@ class BranchDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAvailableDaysDescription(WorkDays workDays) {
-    final availableDays = <String>[];
 
-    if (workDays.sunday == true) availableDays.add('sunday'.tr());
-    if (workDays.monday == true) availableDays.add('monday'.tr());
-    if (workDays.tuesday == true) availableDays.add('tuesday'.tr());
-    if (workDays.wednesday == true) availableDays.add('wednesday'.tr());
-    if (workDays.thursday == true) availableDays.add('thursday'.tr());
-    if (workDays.friday == true) availableDays.add('friday'.tr());
-    if (workDays.saturday == true) availableDays.add('saturday'.tr());
-
-    return Center(
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: availableDays
-            .map(
-              (day) => Chip(
-                label: SizedBox(
-                  width: 80.w,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        color: AppColors.border00,
-                        size: 18.sp,
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(child: Text(day)),
-                    ],
-                  ),
-                ),
-                backgroundColor: AppColors.darkBlue02,
-                labelStyle: AppTextStyles.tajawal14W700.copyWith(
-                  color: AppColors.border00,
-                ),
-                side: BorderSide(color: AppColors.darkBlue02, width: 1.w),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                elevation: 4,
-                shadowColor: AppColors.darkBlue02.withOpacity(0.3),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
 }

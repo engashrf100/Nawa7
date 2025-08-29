@@ -48,4 +48,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   void updateGender(String gender) {
     emit(state.copyWith(selectedGender: gender));
   }
+
+  void updateDob(String dob) {
+    emit(state.copyWith(selectedDob: dob));
+  }
 }

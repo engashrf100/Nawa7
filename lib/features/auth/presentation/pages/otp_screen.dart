@@ -4,10 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nawah/core/theme/app_colors.dart';
+import 'package:nawah/core/const/app_assets.dart';
+  import 'package:nawah/core/theme/app_colors.dart';
 import 'package:nawah/core/theme/app_text_styles.dart';
-import 'package:nawah/core/widgets/back_button.dart';
 import 'package:nawah/core/widgets/background_widget00.dart';
+import 'package:nawah/core/widgets/gradient_icon_button.dart';
 import 'package:nawah/features/home/presentation/widgets/home_widgets/home_promary_button.dart';
 import 'package:nawah/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -63,8 +64,17 @@ class _OtpScreenState extends State<OtpScreen> {
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const BackButton00(),
+            title: GradientIconButton(
+                          assetPath: AppAssets.backArrow,
+                          useSvg: true,
+                          isLeft: false,
+                          height: 40.h,
+                          width: 40.w,
+                          padding: EdgeInsets.all(8.w),
+                          onTap: () => Navigator.pop(context),
+                        ),
             automaticallyImplyLeading: false,
+            centerTitle: false,
           ),
           resizeToAvoidBottomInset: false,
           body: Center(
@@ -172,13 +182,22 @@ class _OtpScreenState extends State<OtpScreen> {
                       height: 49.h,
                       title: "otp_continue".tr(),
                       onTap: () =>
-                          context.read<OtpCubit>().verifyOtpForRegistration(
+                      {
+
+                          widget.isActiveAcoount ? context.read<OtpCubit>().verifyOtpForRegistration(
+                            VerifyOtpRequestModel(
+                              countryId: country!.id.toString(),
+                              phone: widget.phoneNumber,
+                              code: _otpCode,
+                            ),
+                          ) : context.read<OtpCubit>().verifyOtpForPasswordReset(
                             VerifyOtpRequestModel(
                               countryId: country!.id.toString(),
                               phone: widget.phoneNumber,
                               code: _otpCode,
                             ),
                           ),
+                      }
                     ),
                   ],
                 ),

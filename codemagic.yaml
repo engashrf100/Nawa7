@@ -1,0 +1,176 @@
+# ===========================================
+# CODEMAGIC CI/CD CONFIGURATION - NAWA7 APP
+# ===========================================
+# PURPOSE: Build APK files for client distribution
+# TRIGGER: Automatic build on every push to main branch
+# OUTPUT: Clean APK files (no zip, no AAB)
+# ===========================================
+
+workflows:
+  # ===========================================
+  # MAIN APK BUILD WORKFLOW
+  # ===========================================
+  android-workflow:
+    name: Nawa7 APK Build
+    environment:
+      flutter: stable
+      android_signing:
+        - nawa7_keystore
+      vars:
+        PACKAGE_NAME: "com.example.nawah"
+        BUILD_APP_NAME: "nawa7"
+        API_BASE_URL: "https://eslamatia.online"
+    
+    scripts:
+      # Clean and setup
+      - name: Setup environment
+        script: |
+          echo "=== NAWA7 APP BUILD STARTED ==="
+          echo "Build Number: $CM_BUILD_NUMBER"
+          echo "App Version: 1.0.0"
+          
+          # Clean previous builds
+          flutter clean
+          flutter pub get
+      
+      # Build APK files
+      - name: Build APK files
+        script: |
+          echo "=== BUILDING APK FILES ==="
+          
+          # Build universal APK
+          echo "Building universal APK..."
+          flutter build apk \
+            --release \
+            --build-name=1.0.0 \
+            --build-number=$CM_BUILD_NUMBER \
+            --dart-define=ENVIRONMENT=production \
+            --dart-define=API_BASE_URL=$API_BASE_URL
+          
+          # Verify APK created
+          if [ ! -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "🚨 ERROR: Universal APK not created!"
+            exit 1
+          fi
+          
+          echo "✅ Universal APK built successfully"
+          ls -lh build/app/outputs/flutter-apk/app-release.apk
+      
+      # Prepare APK for distribution
+      - name: Prepare APK for distribution
+        script: |
+          echo "=== PREPARING APK FOR DISTRIBUTION ==="
+          
+          # Create distribution directory
+          mkdir -p build/distribution
+          
+          # Copy and rename APK with version info
+          cp "build/app/outputs/flutter-apk/app-release.apk" \
+             "build/distribution/nawa7-1.0.0-$CM_BUILD_NUMBER.apk"
+          
+          # Generate release notes for client
+          echo "=== GENERATING RELEASE NOTES ==="
+          cat > build/distribution/RELEASE_NOTES.txt << 'EOF'
+          🚀 NAWA7 APP - VERSION 1.0.0 (Build $CM_BUILD_NUMBER)
+          ===========================================
+          
+          🏥 HEALTHCARE CONSULTATION PLATFORM
+          - Professional medical consultation services
+          - Multi-language support (Arabic & English)
+          - Modern, intuitive user interface
+          
+          🏢 BRANCH MANAGEMENT SYSTEM
+          - Comprehensive branch information and details
+          - Working hours and availability tracking
+          - Real-time branch status (open/closed)
+          - Branch categories and specializations
+          
+          🔍 ADVANCED SEARCH FUNCTIONALITY
+          - Search branches by name, location, and category
+          - Filter by working days and regions
+          - Smart search with debounced input
+          - Real-time search results
+          
+          👥 USER AUTHENTICATION
+          - Secure login and registration system
+          - OTP verification for security
+          - Password recovery functionality
+          - User profile management
+          
+          🌍 MULTI-LANGUAGE SUPPORT
+          - Full Arabic language implementation
+          - Right-to-left (RTL) text support
+          - Localized content and interface elements
+          - Cultural adaptation for Arabic users
+          
+          📱 TECHNICAL IMPROVEMENTS
+          - Enhanced performance and stability
+          - Better error handling and user feedback
+          - Improved data synchronization
+          - Modern iOS-style UI components
+          
+          🎨 DESIGN & UX ENHANCEMENTS
+          - Beautiful gradient designs
+          - Consistent color scheme throughout
+          - Responsive layout for all screen sizes
+          - Professional medical app aesthetics
+          
+          ===========================================
+          Build Date: $(date)
+          Build Number: $CM_BUILD_NUMBER
+          App Version: 1.0.0
+          ===========================================
+          EOF
+          
+          echo "✅ APK and Release Notes ready for distribution:"
+          ls -lh build/distribution/
+          echo ""
+          echo "📋 RELEASE NOTES:"
+          cat build/distribution/RELEASE_NOTES.txt
+    
+    artifacts:
+      # Only APK files - no zip, no other files
+      - build/distribution/*.apk
+      - build/app/outputs/flutter-apk/*.apk
+      - build/distribution/RELEASE_NOTES.txt
+    
+    # ===========================================
+    # BUILD CONFIGURATION
+    # ===========================================
+    # - APK only (no AAB)
+    # - Clean downloads (no zip files)
+    # - Professional naming for clients
+    # ===========================================
+    
+    # ===========================================
+    # RELEASE NOTES - Version 1.0.0
+    # ===========================================
+    # 🏥 HEALTHCARE CONSULTATION PLATFORM
+    # - Professional medical consultation services
+    # - Multi-language support (Arabic & English)
+    # - Modern, intuitive user interface
+    #
+    # 🏢 BRANCH MANAGEMENT SYSTEM
+    # - Comprehensive branch information and details
+    # - Working hours and availability tracking
+    # - Real-time branch status (open/closed)
+    # - Branch categories and specializations
+    #
+    # 🔍 ADVANCED SEARCH FUNCTIONALITY
+    # - Search branches by name, location, and category
+    # - Filter by working days and regions
+    # - Smart search with debounced input
+    # - Real-time search results
+    #
+    # 👥 USER AUTHENTICATION
+    # - Secure login and registration system
+    # - OTP verification for security
+    # - Password recovery functionality
+    # - User profile management
+    #
+    # 🌍 MULTI-LANGUAGE SUPPORT
+    # - Full Arabic language implementation
+    # - Right-to-left (RTL) text support
+    # - Localized content and interface elements
+    # - Cultural adaptation for Arabic users
+    # ===========================================

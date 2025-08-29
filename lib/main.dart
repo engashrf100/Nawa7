@@ -11,7 +11,6 @@ import 'package:nawah/features/auth/presentation/cubits/top_main/top_main_cubit.
 import 'package:nawah/features/home/presentation/cubits/home/home_cubit.dart';
 import 'package:nawah/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:nawah/features/settings/presentation/cubit/settings_state.dart';
-import 'package:nawah/features/settings/presentation/cubit/onboarding_cubit.dart';
 import 'package:nawah/injection_container.dart';
 
 void main() async {

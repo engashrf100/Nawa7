@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:nawah/features/auth/data/model/requests/forget_password_request_model.dart';
 import 'package:nawah/features/auth/data/model/requests/register_request_model.dart';
 import 'package:nawah/core/network/api_service.dart';
@@ -38,8 +37,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       deviceId: request.deviceId ?? '',
       deviceType: request.deviceType ?? '',
       countryId: request.countryId,
-      email: request.email ?? '',
-      dob: request.dob ?? "",
+      dob: request.dob,
       gender: request.gender ?? "",
       passwordConfirmation: request.passwordConfirmation,
     );

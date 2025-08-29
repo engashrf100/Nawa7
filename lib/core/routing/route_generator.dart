@@ -10,13 +10,16 @@ import 'package:nawah/features/auth/presentation/pages/login_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/otp_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/reset_pass_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/signup_screen.dart';
+import 'package:nawah/features/auth/presentation/pages/terms_and_conditions_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/user_profile_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/user_account_screen.dart';
 import 'package:nawah/features/auth/presentation/pages/user_settings_screen.dart';
 import 'package:nawah/features/home/presentation/pages/branch_details_screen.dart';
 import 'package:nawah/features/home/presentation/cubits/home/home_cubit.dart';
 import 'package:nawah/features/home/presentation/pages/home_screen.dart';
-import 'package:nawah/features/home/presentation/pages/main_screen.dart';
+import 'package:nawah/features/home/presentation/pages/search_screen.dart';
+import 'package:nawah/features/home/data/model/branch_model/branch_model.dart';
+import 'package:nawah/features/main/presentation/pages/main_screen.dart';
 import 'package:nawah/features/settings/presentation/pages/choose_lang_screen.dart';
 import 'package:nawah/features/settings/presentation/pages/onboarding_screen.dart';
 import 'package:nawah/features/settings/presentation/pages/theme_screen.dart';
@@ -85,10 +88,15 @@ class RouteGenerator {
         );
 
       case AppRoutes.newPass:
+        final map = args as Map<String, dynamic>;
+
         return _fade(
           BlocProvider(
             create: (context) => sl<ForgetPassCubit>(),
-            child: ResetPassScreen(phoneNumber: 'phoneNumber', otp: 'otp'),
+            child: ResetPassScreen(
+              phoneNumber: map['phoneNumber'],
+              otp: map['otp'],
+            ),
           ),
         );
 
@@ -114,6 +122,9 @@ class RouteGenerator {
       case AppRoutes.userSettings:
         return _fade(const UserSettingsScreen());
 
+      case AppRoutes.termsAndConditions:
+        return _fade(const TermsAndConditionsScreen());
+
       // Home Screens
       case AppRoutes.home:
         return _fade(MainScreen());
@@ -124,6 +135,15 @@ class RouteGenerator {
           BranchDetailsScreen(
             appBranch: map['appBranch'],
             clientReviews: map['clientReviews'],
+          ),
+        );
+
+      case AppRoutes.search:
+        final map = args as Map<String, dynamic>;
+        final branches = map['initialBranches'] as List<dynamic>? ?? [];
+        return _fade(
+          SearchScreen(
+            initialBranches: branches.cast<Branch>(),
           ),
         );
 

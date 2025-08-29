@@ -13,6 +13,7 @@ class GradientIconButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? height;
   final double? width;
+  final bool preserveColors; // New parameter to preserve original image colors
 
   const GradientIconButton({
     Key? key,
@@ -23,6 +24,7 @@ class GradientIconButton extends StatelessWidget {
     this.padding,
     this.height,
     this.width,
+    this.preserveColors = false, // Default to false for backward compatibility
   }) : super(key: key);
 
   @override
@@ -38,7 +40,11 @@ class GradientIconButton extends StatelessWidget {
           gradient: LinearGradient(
             begin: isLeft ? Alignment.bottomRight : Alignment.bottomLeft,
             end: isLeft ? Alignment.topLeft : Alignment.topRight,
-            colors: [colorScheme.white, colorScheme.homeBg, colorScheme.homeBg],
+            colors: [
+              colorScheme.white,
+              colorScheme.homeBg,
+            ],
+            stops: [0.25, 1],
           ),
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
@@ -54,13 +60,14 @@ class GradientIconButton extends StatelessWidget {
           child: useSvg
               ? SvgPicture.asset(
                   assetPath,
-                  color: colorScheme.onBackground.withOpacity(0.8),
+                  color: colorScheme.text100.withOpacity(0.8),
                   width: 24.w,
                   height: 24.h,
+                  matchTextDirection: true,
                 )
               : Image.asset(
                   assetPath,
-                  color: colorScheme.onBackground.withOpacity(0.8),
+                  color: preserveColors ? null : colorScheme.onBackground.withOpacity(0.8),
                   width: 24.w,
                   height: 24.h,
                   fit: BoxFit.contain,

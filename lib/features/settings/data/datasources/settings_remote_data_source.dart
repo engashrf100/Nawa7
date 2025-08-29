@@ -5,6 +5,7 @@ import 'package:nawah/features/settings/data/model/settings_response_model.dart'
 
 abstract class SettingsRemoteDataSource {
   Future<SettingsModel> getSettings();
+  Future<SettingsModel> getSettingsByKey(String key);
   Future<OnboardingModel> getAppIntro();
   Future<CountriesModel> getCountries();
 }
@@ -17,6 +18,13 @@ class SettingsRemoteDataSourceImpl implements SettingsRemoteDataSource {
   @override
   Future<SettingsModel> getSettings() async {
     final httpResponse = await apiService.getSettings();
+
+    return httpResponse.data;
+  }
+
+  @override
+  Future<SettingsModel> getSettingsByKey(String key) async {
+    final httpResponse = await apiService.getSettingsByKey(key);
 
     return httpResponse.data;
   }

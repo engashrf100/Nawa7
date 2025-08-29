@@ -13,6 +13,10 @@ enum SettingsLoadingState { initial, loading, loaded, error, noInternet }
 
 enum CountriesState { initial, loaded, empty, error, noInternet }
 
+enum AboutUsLoadingState { initial, loading, loaded, error, noInternet }
+
+enum TermsLoadingState { initial, loading, loaded, error, noInternet }
+
 @freezed
 class SettingsState with _$SettingsState {
   const factory SettingsState({
@@ -30,6 +34,14 @@ class SettingsState with _$SettingsState {
     CountriesModel? countries,
     String? errorMessage,
     Country? selectedCountry,
+
+    @Default(AboutUsLoadingState.initial) AboutUsLoadingState aboutUsState,
+    SettingsModel? aboutUsData,
+    String? aboutUsErrorMessage,
+
+    @Default(TermsLoadingState.initial) TermsLoadingState termsState,
+    SettingsModel? termsData,
+    String? termsErrorMessage,
   }) = _SettingsState;
 }
 

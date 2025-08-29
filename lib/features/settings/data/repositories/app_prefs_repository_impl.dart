@@ -62,6 +62,18 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
+  Future<Either<Failure, SettingsModel>> fetchSettingsByKey(String key) async {
+    try {
+      final settingsData = await dataSource.getSettingsByKey(key);
+      return Right(settingsData);
+    } on DioException catch (dioError) {
+      return Left(handleDioException(dioError));
+    } catch (error) {
+      return Left(ServerFailure('Failed to load settings data: $error'));
+    }
+  }
+
+  @override
   Future<Either<Failure, OnboardingModel>> getAppIntro() async {
     try {
       final appIntroData = await dataSource.getAppIntro();

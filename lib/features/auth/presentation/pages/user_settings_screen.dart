@@ -43,7 +43,7 @@ class UserSettingsScreen extends StatelessWidget {
                       children: [
                         GradientIconButton(
                           assetPath: AppAssets.backArrow,
-                          useSvg: true,
+                          useSvg: true, 
                           isLeft: false,
                           height: 40.h,
                           width: 40.w,
@@ -237,11 +237,9 @@ class UserSettingsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10.w),
 
-                    SvgPicture.asset(
-                      AppAssets.backArrow,
-                      width: 16.w,
-                      height: 16.h,
-                      matchTextDirection: true,
+                    Icon(  Icons.arrow_forward_ios,
+                color: AppColors.lightBlue03,
+                size: 16.w,
                     ),
                   ],
                 ),

@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
   final List<String>? errorMessages;
   final VoidCallback? onSubmitted;
   final VoidCallback? onTap;
+  final Function(String)? onChanged;
   final TextInputAction textInputAction;
   final FocusNode? focusNode;
   final bool autoUnfocus;
@@ -31,6 +32,7 @@ class CustomTextField extends StatefulWidget {
     this.errorMessages,
     this.onSubmitted,
     this.onTap,
+    this.onChanged,
     this.textInputAction = TextInputAction.done,
     this.focusNode,
     this.autoUnfocus = true,
@@ -88,6 +90,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           maxLines: widget.maxLines,
           obscureText: _isObscured,
           textInputAction: widget.textInputAction,
+          onChanged: widget.onChanged,
           onSubmitted: _handleSubmitted,
           onTap: _handleTap,
           decoration: InputDecoration(

@@ -15,7 +15,9 @@ class AppRoutes {
   static const String newPass = '/newPass';
   static const String authSuccess = '/authSuccess';
   static const String branchDetails = '/branch_details';
+  static const String search = '/search';
   static const String userProfile = '/user_profile';
   static const String userAccount = '/user_account';
   static const String userSettings = '/user_settings';
+  static const String termsAndConditions = '/terms_and_conditions';
 }

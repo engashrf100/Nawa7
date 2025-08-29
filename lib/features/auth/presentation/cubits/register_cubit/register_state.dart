@@ -12,6 +12,7 @@ class RegisterState with _$RegisterState {
     String? message,
     @Default(false) bool isPolicyChecked,
     @Default("1") String selectedGender,
+    @Default("1991-01-01") String selectedDob,
   }) = _RegisterState;
 }
 

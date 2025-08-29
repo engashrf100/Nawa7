@@ -27,9 +27,8 @@ abstract class ApiService {
     @Part(name: 'device_id') required String deviceId,
     @Part(name: 'device_type') required String deviceType,
     @Part(name: 'country_id') required String countryId,
-    @Part(name: 'email') required String email,
     @Part(name: 'dob') required String dob,
-    @Part(name: "gender") required String gender,
+    @Part(name: 'gender') required String gender,
     @Part(name: 'password_confirmation') required String passwordConfirmation,
   });
 
@@ -112,6 +111,9 @@ abstract class ApiService {
 
   @GET(AppLinks.settingsUrl)
   Future<HttpResponse<SettingsModel>> getSettings();
+
+  @GET('${AppLinks.settingsUrl}?key={key}')
+  Future<HttpResponse<SettingsModel>> getSettingsByKey(@Query('key') String key);
 
   @GET(AppLinks.appIntro)
   Future<HttpResponse<OnboardingModel>> getAppIntro();

@@ -22,6 +22,7 @@ mixin _$RegisterState {
   String? get message => throw _privateConstructorUsedError;
   bool get isPolicyChecked => throw _privateConstructorUsedError;
   String get selectedGender => throw _privateConstructorUsedError;
+  String get selectedDob => throw _privateConstructorUsedError;
 
   /// Create a copy of RegisterState
   /// with the given fields replaced by the non-null parameter values.
@@ -43,6 +44,7 @@ abstract class $RegisterStateCopyWith<$Res> {
     String? message,
     bool isPolicyChecked,
     String selectedGender,
+    String selectedDob,
   });
 }
 
@@ -66,6 +68,7 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
     Object? message = freezed,
     Object? isPolicyChecked = null,
     Object? selectedGender = null,
+    Object? selectedDob = null,
   }) {
     return _then(
       _value.copyWith(
@@ -89,6 +92,10 @@ class _$RegisterStateCopyWithImpl<$Res, $Val extends RegisterState>
                 ? _value.selectedGender
                 : selectedGender // ignore: cast_nullable_to_non_nullable
                       as String,
+            selectedDob: null == selectedDob
+                ? _value.selectedDob
+                : selectedDob // ignore: cast_nullable_to_non_nullable
+                      as String,
           )
           as $Val,
     );
@@ -110,6 +117,7 @@ abstract class _$$RegisterStateImplCopyWith<$Res>
     String? message,
     bool isPolicyChecked,
     String selectedGender,
+    String selectedDob,
   });
 }
 
@@ -132,6 +140,7 @@ class __$$RegisterStateImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? isPolicyChecked = null,
     Object? selectedGender = null,
+    Object? selectedDob = null,
   }) {
     return _then(
       _$RegisterStateImpl(
@@ -155,6 +164,10 @@ class __$$RegisterStateImplCopyWithImpl<$Res>
             ? _value.selectedGender
             : selectedGender // ignore: cast_nullable_to_non_nullable
                   as String,
+        selectedDob: null == selectedDob
+            ? _value.selectedDob
+            : selectedDob // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -169,6 +182,7 @@ class _$RegisterStateImpl implements _RegisterState {
     this.message,
     this.isPolicyChecked = false,
     this.selectedGender = "1",
+    this.selectedDob = "1991-01-01",
   });
 
   @override
@@ -184,10 +198,13 @@ class _$RegisterStateImpl implements _RegisterState {
   @override
   @JsonKey()
   final String selectedGender;
+  @override
+  @JsonKey()
+  final String selectedDob;
 
   @override
   String toString() {
-    return 'RegisterState(status: $status, errors: $errors, message: $message, isPolicyChecked: $isPolicyChecked, selectedGender: $selectedGender)';
+    return 'RegisterState(status: $status, errors: $errors, message: $message, isPolicyChecked: $isPolicyChecked, selectedGender: $selectedGender, selectedDob: $selectedDob)';
   }
 
   @override
@@ -201,7 +218,9 @@ class _$RegisterStateImpl implements _RegisterState {
             (identical(other.isPolicyChecked, isPolicyChecked) ||
                 other.isPolicyChecked == isPolicyChecked) &&
             (identical(other.selectedGender, selectedGender) ||
-                other.selectedGender == selectedGender));
+                other.selectedGender == selectedGender) &&
+            (identical(other.selectedDob, selectedDob) ||
+                other.selectedDob == selectedDob));
   }
 
   @override
@@ -212,6 +231,7 @@ class _$RegisterStateImpl implements _RegisterState {
     message,
     isPolicyChecked,
     selectedGender,
+    selectedDob,
   );
 
   /// Create a copy of RegisterState
@@ -230,6 +250,7 @@ abstract class _RegisterState implements RegisterState {
     final String? message,
     final bool isPolicyChecked,
     final String selectedGender,
+    final String selectedDob,
   }) = _$RegisterStateImpl;
 
   @override
@@ -242,6 +263,8 @@ abstract class _RegisterState implements RegisterState {
   bool get isPolicyChecked;
   @override
   String get selectedGender;
+  @override
+  String get selectedDob;
 
   /// Create a copy of RegisterState
   /// with the given fields replaced by the non-null parameter values.

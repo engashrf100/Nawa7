@@ -28,6 +28,12 @@ mixin _$SettingsState {
   CountriesModel? get countries => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   Country? get selectedCountry => throw _privateConstructorUsedError;
+  AboutUsLoadingState get aboutUsState => throw _privateConstructorUsedError;
+  SettingsModel? get aboutUsData => throw _privateConstructorUsedError;
+  String? get aboutUsErrorMessage => throw _privateConstructorUsedError;
+  TermsLoadingState get termsState => throw _privateConstructorUsedError;
+  SettingsModel? get termsData => throw _privateConstructorUsedError;
+  String? get termsErrorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.
@@ -55,6 +61,12 @@ abstract class $SettingsStateCopyWith<$Res> {
     CountriesModel? countries,
     String? errorMessage,
     Country? selectedCountry,
+    AboutUsLoadingState aboutUsState,
+    SettingsModel? aboutUsData,
+    String? aboutUsErrorMessage,
+    TermsLoadingState termsState,
+    SettingsModel? termsData,
+    String? termsErrorMessage,
   });
 }
 
@@ -80,10 +92,16 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
     Object? settingsState = null,
     Object? settings = freezed,
     Object? settingsErrorMessage = freezed,
-    Object? countriesState = freezed,
+    Object? countriesState = null,
     Object? countries = freezed,
     Object? errorMessage = freezed,
     Object? selectedCountry = freezed,
+    Object? aboutUsState = null,
+    Object? aboutUsData = freezed,
+    Object? aboutUsErrorMessage = freezed,
+    Object? termsState = null,
+    Object? termsData = freezed,
+    Object? termsErrorMessage = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -115,7 +133,7 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
                 ? _value.settingsErrorMessage
                 : settingsErrorMessage // ignore: cast_nullable_to_non_nullable
                       as String?,
-            countriesState: freezed == countriesState
+            countriesState: null == countriesState
                 ? _value.countriesState
                 : countriesState // ignore: cast_nullable_to_non_nullable
                       as CountriesState,
@@ -131,6 +149,30 @@ class _$SettingsStateCopyWithImpl<$Res, $Val extends SettingsState>
                 ? _value.selectedCountry
                 : selectedCountry // ignore: cast_nullable_to_non_nullable
                       as Country?,
+            aboutUsState: null == aboutUsState
+                ? _value.aboutUsState
+                : aboutUsState // ignore: cast_nullable_to_non_nullable
+                      as AboutUsLoadingState,
+            aboutUsData: freezed == aboutUsData
+                ? _value.aboutUsData
+                : aboutUsData // ignore: cast_nullable_to_non_nullable
+                      as SettingsModel?,
+            aboutUsErrorMessage: freezed == aboutUsErrorMessage
+                ? _value.aboutUsErrorMessage
+                : aboutUsErrorMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            termsState: null == termsState
+                ? _value.termsState
+                : termsState // ignore: cast_nullable_to_non_nullable
+                      as TermsLoadingState,
+            termsData: freezed == termsData
+                ? _value.termsData
+                : termsData // ignore: cast_nullable_to_non_nullable
+                      as SettingsModel?,
+            termsErrorMessage: freezed == termsErrorMessage
+                ? _value.termsErrorMessage
+                : termsErrorMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -158,6 +200,12 @@ abstract class _$$SettingsStateImplCopyWith<$Res>
     CountriesModel? countries,
     String? errorMessage,
     Country? selectedCountry,
+    AboutUsLoadingState aboutUsState,
+    SettingsModel? aboutUsData,
+    String? aboutUsErrorMessage,
+    TermsLoadingState termsState,
+    SettingsModel? termsData,
+    String? termsErrorMessage,
   });
 }
 
@@ -182,10 +230,16 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
     Object? settingsState = null,
     Object? settings = freezed,
     Object? settingsErrorMessage = freezed,
-    Object? countriesState = freezed,
+    Object? countriesState = null,
     Object? countries = freezed,
     Object? errorMessage = freezed,
     Object? selectedCountry = freezed,
+    Object? aboutUsState = null,
+    Object? aboutUsData = freezed,
+    Object? aboutUsErrorMessage = freezed,
+    Object? termsState = null,
+    Object? termsData = freezed,
+    Object? termsErrorMessage = freezed,
   }) {
     return _then(
       _$SettingsStateImpl(
@@ -217,7 +271,7 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
             ? _value.settingsErrorMessage
             : settingsErrorMessage // ignore: cast_nullable_to_non_nullable
                   as String?,
-        countriesState: freezed == countriesState
+        countriesState: null == countriesState
             ? _value.countriesState
             : countriesState // ignore: cast_nullable_to_non_nullable
                   as CountriesState,
@@ -233,6 +287,30 @@ class __$$SettingsStateImplCopyWithImpl<$Res>
             ? _value.selectedCountry
             : selectedCountry // ignore: cast_nullable_to_non_nullable
                   as Country?,
+        aboutUsState: null == aboutUsState
+            ? _value.aboutUsState
+            : aboutUsState // ignore: cast_nullable_to_non_nullable
+                  as AboutUsLoadingState,
+        aboutUsData: freezed == aboutUsData
+            ? _value.aboutUsData
+            : aboutUsData // ignore: cast_nullable_to_non_nullable
+                  as SettingsModel?,
+        aboutUsErrorMessage: freezed == aboutUsErrorMessage
+            ? _value.aboutUsErrorMessage
+            : aboutUsErrorMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        termsState: null == termsState
+            ? _value.termsState
+            : termsState // ignore: cast_nullable_to_non_nullable
+                  as TermsLoadingState,
+        termsData: freezed == termsData
+            ? _value.termsData
+            : termsData // ignore: cast_nullable_to_non_nullable
+                  as SettingsModel?,
+        termsErrorMessage: freezed == termsErrorMessage
+            ? _value.termsErrorMessage
+            : termsErrorMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -253,6 +331,12 @@ class _$SettingsStateImpl implements _SettingsState {
     this.countries,
     this.errorMessage,
     this.selectedCountry,
+    this.aboutUsState = AboutUsLoadingState.initial,
+    this.aboutUsData,
+    this.aboutUsErrorMessage,
+    this.termsState = TermsLoadingState.initial,
+    this.termsData,
+    this.termsErrorMessage,
   });
 
   @override
@@ -282,10 +366,24 @@ class _$SettingsStateImpl implements _SettingsState {
   final String? errorMessage;
   @override
   final Country? selectedCountry;
+  @override
+  @JsonKey()
+  final AboutUsLoadingState aboutUsState;
+  @override
+  final SettingsModel? aboutUsData;
+  @override
+  final String? aboutUsErrorMessage;
+  @override
+  @JsonKey()
+  final TermsLoadingState termsState;
+  @override
+  final SettingsModel? termsData;
+  @override
+  final String? termsErrorMessage;
 
   @override
   String toString() {
-    return 'SettingsState(themeMode: $themeMode, flowStatus: $flowStatus, onboardingPageIndex: $onboardingPageIndex, preferences: $preferences, settingsState: $settingsState, settings: $settings, settingsErrorMessage: $settingsErrorMessage, countriesState: $countriesState, countries: $countries, errorMessage: $errorMessage, selectedCountry: $selectedCountry)';
+    return 'SettingsState(themeMode: $themeMode, flowStatus: $flowStatus, onboardingPageIndex: $onboardingPageIndex, preferences: $preferences, settingsState: $settingsState, settings: $settings, settingsErrorMessage: $settingsErrorMessage, countriesState: $countriesState, countries: $countries, errorMessage: $errorMessage, selectedCountry: $selectedCountry, aboutUsState: $aboutUsState, aboutUsData: $aboutUsData, aboutUsErrorMessage: $aboutUsErrorMessage, termsState: $termsState, termsData: $termsData, termsErrorMessage: $termsErrorMessage)';
   }
 
   @override
@@ -307,17 +405,26 @@ class _$SettingsStateImpl implements _SettingsState {
                 other.settings == settings) &&
             (identical(other.settingsErrorMessage, settingsErrorMessage) ||
                 other.settingsErrorMessage == settingsErrorMessage) &&
-            const DeepCollectionEquality().equals(
-              other.countriesState,
-              countriesState,
-            ) &&
-            const DeepCollectionEquality().equals(other.countries, countries) &&
+            (identical(other.countriesState, countriesState) ||
+                other.countriesState == countriesState) &&
+            (identical(other.countries, countries) ||
+                other.countries == countries) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            const DeepCollectionEquality().equals(
-              other.selectedCountry,
-              selectedCountry,
-            ));
+            (identical(other.selectedCountry, selectedCountry) ||
+                other.selectedCountry == selectedCountry) &&
+            (identical(other.aboutUsState, aboutUsState) ||
+                other.aboutUsState == aboutUsState) &&
+            (identical(other.aboutUsData, aboutUsData) ||
+                other.aboutUsData == aboutUsData) &&
+            (identical(other.aboutUsErrorMessage, aboutUsErrorMessage) ||
+                other.aboutUsErrorMessage == aboutUsErrorMessage) &&
+            (identical(other.termsState, termsState) ||
+                other.termsState == termsState) &&
+            (identical(other.termsData, termsData) ||
+                other.termsData == termsData) &&
+            (identical(other.termsErrorMessage, termsErrorMessage) ||
+                other.termsErrorMessage == termsErrorMessage));
   }
 
   @override
@@ -330,10 +437,16 @@ class _$SettingsStateImpl implements _SettingsState {
     settingsState,
     settings,
     settingsErrorMessage,
-    const DeepCollectionEquality().hash(countriesState),
-    const DeepCollectionEquality().hash(countries),
+    countriesState,
+    countries,
     errorMessage,
-    const DeepCollectionEquality().hash(selectedCountry),
+    selectedCountry,
+    aboutUsState,
+    aboutUsData,
+    aboutUsErrorMessage,
+    termsState,
+    termsData,
+    termsErrorMessage,
   );
 
   /// Create a copy of SettingsState
@@ -358,6 +471,12 @@ abstract class _SettingsState implements SettingsState {
     final CountriesModel? countries,
     final String? errorMessage,
     final Country? selectedCountry,
+    final AboutUsLoadingState aboutUsState,
+    final SettingsModel? aboutUsData,
+    final String? aboutUsErrorMessage,
+    final TermsLoadingState termsState,
+    final SettingsModel? termsData,
+    final String? termsErrorMessage,
   }) = _$SettingsStateImpl;
 
   @override
@@ -382,6 +501,18 @@ abstract class _SettingsState implements SettingsState {
   String? get errorMessage;
   @override
   Country? get selectedCountry;
+  @override
+  AboutUsLoadingState get aboutUsState;
+  @override
+  SettingsModel? get aboutUsData;
+  @override
+  String? get aboutUsErrorMessage;
+  @override
+  TermsLoadingState get termsState;
+  @override
+  SettingsModel? get termsData;
+  @override
+  String? get termsErrorMessage;
 
   /// Create a copy of SettingsState
   /// with the given fields replaced by the non-null parameter values.

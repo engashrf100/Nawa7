@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:gap/gap.dart';
 import 'package:nawah/core/const/app_assets.dart';
+import 'package:nawah/core/routing/app_routes.dart';
 import 'package:nawah/core/theme/app_colors.dart';
 import 'package:nawah/core/theme/app_text_styles.dart';
 import 'package:nawah/core/widgets/app_card.dart';
@@ -14,9 +15,11 @@ import 'package:nawah/features/auth/presentation/cubits/top_main/top_main_cubit.
 import 'package:nawah/features/auth/presentation/cubits/top_main/top_main_state.dart';
 import 'package:nawah/features/auth/presentation/widgets/profile_form_field.dart';
 import 'package:nawah/features/auth/presentation/widgets/avatar_upload_widget.dart';
+
 import 'package:nawah/features/auth/data/model/requests/update_profile_request_model.dart';
 import 'package:nawah/features/home/presentation/widgets/home_widgets/home_promary_button.dart';
-import 'package:nawah/features/settings/presentation/widgets/theme_lang_switcher.dart';
+import 'package:nawah/features/auth/presentation/widgets/user_profile_birth_date_widget.dart';
+
 
 class UserAccountScreen extends StatefulWidget {
   const UserAccountScreen({super.key});
@@ -53,8 +56,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
       _dobController.text = state.user?.dob ?? '';
       _selectedCountryId = state.user?.countryId;
     } else {
-      // Set default gender to '1' (male) if no user data
-      _selectedGender = '1';
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.splash, (route) => false);
     }
   }
 
@@ -202,6 +204,17 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
 
                                 Gap(20.h),
 
+                                // Birth Date Field
+                                UserProfileBirthDateWidget(
+                                  initialDate: _dobController.text,
+                                  onDateSelected: (date) {
+                                    setState(() {
+                                      _dobController.text = date;
+                                    });
+                                  },
+                                ),
+                                Gap(20.h),
+
                                 // Gender Selection
                                 _buildGenderSelection(state),
                                 Gap(20.h),
@@ -279,8 +292,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
   }
 
   Widget _buildGenderSelection(TopMainState state) {
-    final theme = Theme.of(context);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -320,7 +331,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     required bool isSelected,
   }) {
     final theme = Theme.of(context);
-
+    
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -378,23 +389,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now().subtract(
-        Duration(days: 6570),
-      ), // 18 years ago
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        _dobController.text =
-            "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
-      });
-    }
   }
 
   void _showConfirmChangesDialog() {

@@ -11,7 +11,7 @@ import 'package:nawah/core/widgets/gradient_icon_button.dart';
 import 'package:nawah/features/auth/data/model/shared/user_model.dart';
 import 'package:nawah/features/auth/presentation/cubits/top_main/top_main_cubit.dart';
 import 'package:nawah/features/auth/presentation/cubits/top_main/top_main_state.dart';
-import 'package:nawah/features/settings/presentation/cubit/settings_cubit.dart';
+
 
 enum CurrentScreen { home, branches, aboutUs, doctors, account }
 
@@ -37,32 +37,38 @@ class HomeHeaderSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Conditionally show user icon (hide on account screen)
-          if (currentScreen != CurrentScreen.account)
-            GradientIconButton(
-              assetPath: AppAssets.userIcon,
-              useSvg: true,
-              isLeft: false,
-              padding: EdgeInsets.all(8.w),
-              onTap: () => _handleUserNavigation(context),
-            )
-          else
-            SizedBox(width: 46.w), // Placeholder to maintain layout
+          // Show app logo in all screens
+          GradientIconButton(
+            assetPath: AppAssets.logo,
+            useSvg: false,
+            isLeft: false,
+            padding: EdgeInsets.all(8.w),
+            onTap: null, // Remove navigation logic
+            preserveColors: true, // Preserve original logo colors
+          ),
 
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: _buildCenterContent(context, colorScheme),
           ),
 
-          // Right icon - search for most screens, gear for account screen
-          GradientIconButton(
-            assetPath: currentScreen == CurrentScreen.account
-                ? AppAssets.gear
-                : AppAssets.search,
-            useSvg: true,
-            isLeft: true,
-            onTap: () => _handleRightIconTap(context),
-          ),
+          // Right icon - search only in branches, gear for account screen, nothing for others
+          if (currentScreen == CurrentScreen.branches)
+            GradientIconButton(
+              assetPath: AppAssets.search,
+              useSvg: true,
+              isLeft: true,
+              onTap: () => _handleRightIconTap(context),
+            )
+          else if (currentScreen == CurrentScreen.account)
+            GradientIconButton(
+              assetPath: AppAssets.gear,
+              useSvg: true,
+              isLeft: true,
+              onTap: () => _handleRightIconTap(context),
+            )
+          else
+            SizedBox(width: 46.w), // Placeholder for other screens
         ],
       ),
     );
@@ -80,8 +86,6 @@ class HomeHeaderSection extends StatelessWidget {
         return _buildDoctorsContent(colorScheme);
       case CurrentScreen.account:
         return _buildAccountContent(colorScheme);
-      default:
-        return _buildHomeContent(context, colorScheme);
     }
   }
 
@@ -89,7 +93,6 @@ class HomeHeaderSection extends StatelessWidget {
     return BlocSelector<TopMainCubit, TopMainState, UserModel?>(
       selector: (state) => state.user,
       builder: (context, user) {
-        final country = context.read<SettingsCubit>().state.selectedCountry;
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,24 +210,7 @@ class HomeHeaderSection extends StatelessWidget {
     );
   }
 
-  void _handleUserNavigation(BuildContext context) {
-    final state = context.read<TopMainCubit>().state;
 
-    // Check if we have a navigation callback
-    if (onTabNavigation != null) {
-      // Use the callback to navigate to account tab (index 4)
-      onTabNavigation!(4);
-    } else {
-      // Fallback to old behavior if no callback provided
-      if (state.user != null) {
-        // User is logged in, navigate to user profile
-        Navigator.pushNamed(context, AppRoutes.userProfile);
-      } else {
-        // No user, navigate to login
-        Navigator.pushNamed(context, AppRoutes.login);
-      }
-    }
-  }
 
   void _handleRightIconTap(BuildContext context) {
     if (currentScreen == CurrentScreen.account) {

@@ -61,7 +61,7 @@ class AuthStateHandler {
       case AuthStatus.otpForPasswordSuccess:
         DialogService.medicalLoading(
           context,
-          loadingText: "auth_redirecting_to_password_change".tr(),
+      //    loadingText: "auth_redirecting_to_password_change".tr(),
         );
         await Future.delayed(Duration(milliseconds: 2000));
         Navigator.pop(context);
@@ -118,7 +118,7 @@ class AuthStateHandler {
       case AuthStatus.forgotPasswordSuccess:
         DialogService.medicalLoading(
           context,
-          loadingText: "auth_redirecting_to_activation".tr(),
+        //  loadingText: "auth_redirecting_to_activation".tr(),
         );
         await Future.delayed(Duration(milliseconds: 2000));
         Navigator.pop(context);
@@ -136,7 +136,9 @@ class AuthStateHandler {
           subtitle: "auth_redirecting_to_login".tr(),
           autoDismissAfter: Duration(seconds: 2),
           isDismissible: false,
+
         );
+        await Future.delayed(Duration(milliseconds: 2000));
 
         Navigator.pop(context);
         break;

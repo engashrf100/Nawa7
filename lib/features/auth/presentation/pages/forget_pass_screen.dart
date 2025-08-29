@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+  import 'package:nawah/core/const/app_assets.dart';
 import 'package:nawah/core/theme/app_colors.dart';
 import 'package:nawah/core/theme/app_text_styles.dart';
-import 'package:nawah/core/widgets/back_button.dart';
+import 'package:nawah/core/widgets/gradient_icon_button.dart';
 import 'package:nawah/core/widgets/background_widget00.dart';
 import 'package:nawah/features/auth/data/model/requests/forget_password_request_model.dart';
 import 'package:nawah/features/auth/presentation/cubits/pass_cubit/forget_pass_cubit.dart';
@@ -44,8 +45,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const BackButton00(),
+        title: GradientIconButton(
+                          assetPath: AppAssets.backArrow,
+                          useSvg: true,
+                          isLeft: false,
+                          height: 40.h,
+                          width: 40.w,
+                          padding: EdgeInsets.all(8.w),
+                          onTap: () => Navigator.pop(context),
+                        ),
         automaticallyImplyLeading: false,
+        centerTitle: false,
       ),
       resizeToAvoidBottomInset: false,
       backgroundColor: theme.scaffoldBackgroundColor,

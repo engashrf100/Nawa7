@@ -73,12 +73,11 @@ class ProfileMenuItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                SvgPicture.asset(
-                  AppAssets.backArrow,
-                  width: 16.w,
-                  height: 16.h,
-                  matchTextDirection: true,
-                ),
+               
+               Icon(  Icons.arrow_forward_ios,
+                color: AppColors.lightBlue03,
+                size: 16.w,
+               )
               ],
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:nawah/core/theme/app_colors.dart';
 import 'package:nawah/core/widgets/app_card.dart';
 import 'package:nawah/core/widgets/custom_cached_image.dart';
 import 'package:nawah/features/home/data/model/home_model.dart';
+import 'package:gap/gap.dart';
 
 class ClientsRatingSlider extends StatelessWidget {
   final List<ClientReview> ratings;
@@ -33,6 +34,7 @@ class ClientsRatingSlider extends StatelessWidget {
 
 class ClientRatingItem extends StatelessWidget {
   final ClientReview rating;
+  
   const ClientRatingItem({super.key, required this.rating});
 
   @override
@@ -55,114 +57,131 @@ class ClientRatingItem extends StatelessWidget {
           ],
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.all(20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                children: [
-                  SizedBox(
-                    width: 241.w,
-                    child: Text(
-                      rating.clientName ?? '',
-                      overflow: TextOverflow.ellipsis,
-
-                      style: AppTextStyles.tajawal18W700.copyWith(
-                        color: theme.colorScheme.text80,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 6.h),
-
-                  SizedBox(
-                    width: 241.w,
-                    child: Text(
-                      rating.description ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-
-                      style: AppTextStyles.tajawal14W400.copyWith(
-                        color: theme.colorScheme.text60,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-
-                  Wrap(
-                    spacing: 2.w,
-                    children: List.generate(5, (i) {
-                      return Icon(
-                        i < (rating.stars?.toInt() ?? 0)
-                            ? Icons.star
-                            : Icons.star_border,
-                        color: Colors.amber,
-                        size: 20.sp,
-                      );
-                    }),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              width: 281.w,
-              height: 77.h,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.greyStroke,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(10.r),
-                  bottomLeft: Radius.circular(10.r),
-                ),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(100.r),
-                    child: CustomCachedImage(
-                      imageUrl: rating.image ?? '',
-                      width: 40.w,
-                      height: 40.h,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(width: 10.w),
-
-                  /// النصوص
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          rating.name ?? " ",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: AppTextStyles.tajawal16W500.copyWith(
-                            color: theme.colorScheme.text100,
-                          ),
-                        ),
-                        Text(
-                          rating.clientJob ?? "",
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          style: AppTextStyles.tajawal14W400.copyWith(
-                            color: theme.colorScheme.text60,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildMainContent(rating, theme),
+            _buildClientInfo(rating, theme),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMainContent(ClientReview rating, ThemeData theme) {
+    return Flexible(
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildClientName(rating, theme),
+            Gap(6.h),
+            _buildDescription(rating, theme),
+            Gap(8.h),
+            _buildStarRating(rating),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildClientName(ClientReview rating, ThemeData theme) {
+    return Text(
+      rating.clientName ?? '',
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      style: AppTextStyles.tajawal18W700.copyWith(
+        color: theme.colorScheme.text80,
+      ),
+    );
+  }
+
+  Widget _buildDescription(ClientReview rating, ThemeData theme) {
+    return Flexible(
+      child: Text(
+        rating.description ?? '',
+        overflow: TextOverflow.ellipsis,
+        maxLines: 4,
+        style: AppTextStyles.tajawal14W400.copyWith(
+          color: theme.colorScheme.text60,
+          height: 1.2,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStarRating(ClientReview rating) {
+    return Wrap(
+      spacing: 2.w,
+      children: List.generate(5, (i) {
+        return Icon(
+          i < (rating.stars?.toInt() ?? 0)
+              ? Icons.star
+              : Icons.star_border,
+          color: Colors.amber,
+          size: 16.sp,
+        );
+      }),
+    );
+  }
+
+  Widget _buildClientInfo(ClientReview rating, ThemeData theme) {
+    return Container(
+      width: double.infinity,
+      height: 75.h, // Reduced height slightly
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h), // Reduced vertical padding
+      decoration: BoxDecoration(
+        color: theme.colorScheme.greyStroke,
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(10.r),
+          bottomLeft: Radius.circular(10.r),
+        ),
+      ),
+      child: Row(
+        children: [
+          _buildClientAvatar(rating),
+          Gap(12.w),
+          _buildClientDetails(rating, theme),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildClientAvatar(ClientReview rating) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20.r),
+      child: CustomCachedImage(
+        imageUrl: rating.image ?? '',
+        width: 40.w,
+        height: 40.h,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _buildClientDetails(ClientReview rating, ThemeData theme) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            rating.name ?? '',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: AppTextStyles.tajawal16W500.copyWith(
+              color: theme.colorScheme.text100,
+            ),
+          ),
+          Gap(2.h),
+          Text(
+            rating.clientJob ?? '',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: AppTextStyles.tajawal14W400.copyWith(
+              color: theme.colorScheme.text60,
+            ),
+          ),
+        ],
       ),
     );
   }

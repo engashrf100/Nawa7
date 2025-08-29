@@ -27,7 +27,6 @@ class _ApiService implements ApiService {
     required String deviceId,
     required String deviceType,
     required String countryId,
-    required String email,
     required String dob,
     required String gender,
     required String passwordConfirmation,
@@ -42,7 +41,6 @@ class _ApiService implements ApiService {
     _data.fields.add(MapEntry('device_id', deviceId));
     _data.fields.add(MapEntry('device_type', deviceType));
     _data.fields.add(MapEntry('country_id', countryId));
-    _data.fields.add(MapEntry('email', email));
     _data.fields.add(MapEntry('dob', dob));
     _data.fields.add(MapEntry('gender', gender));
     _data.fields.add(MapEntry('password_confirmation', passwordConfirmation));
@@ -542,6 +540,34 @@ class _ApiService implements ApiService {
           .compose(
             _dio.options,
             'https://eslamatia.online/api/v1/settings',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SettingsModel _value;
+    try {
+      _value = SettingsModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<SettingsModel>> getSettingsByKey(String key) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'key': key};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<HttpResponse<SettingsModel>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'https://eslamatia.online/api/v1/settings?key={key}',
             queryParameters: queryParameters,
             data: _data,
           )
